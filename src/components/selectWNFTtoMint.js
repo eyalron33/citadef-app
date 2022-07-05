@@ -38,7 +38,7 @@ function SelectWNFTtoMint(props) {
     return ( 
             <section id="section-collections" className="pt30 pb30">
                 <Helmet>
-                  <title>Citadef - Select a fish to mint</title>
+                  <title>Citadef - Select a fish for your account</title>
                 </Helmet>
                 <div className="container">
                     <div className="col-lg-12 top-100">

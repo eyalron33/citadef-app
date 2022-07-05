@@ -16,15 +16,15 @@ function ConnectWalletButton(props){
 }
 
 function InvitationToken(props) {
-    if (props.hasInvitationToken)
-        return (
-              <div className="px-1"><img alt="invitation-token" className="logo" src="./images/landing/invitation-token.png" /></div>
-        )
-    else {
+    // if (props.hasInvitationToken)
+    //     return (
+    //           <div className="px-1"><img alt="invitation-token" className="logo" src="./images/landing/invitation-token.png" /></div>
+    //     )
+    // else {
         return (
             <></>
         )
-    }
+    // }
 }
 
 function Navigationbar(props) {
@@ -98,7 +98,7 @@ function Navigationbar(props) {
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="me-auto">
         <Nav.Link href="#">Explore</Nav.Link>
-        <Nav.Link href="#/mint/select">Mint</Nav.Link>
+        <Nav.Link href="#/mint/select">Mint an account</Nav.Link>
         <Nav.Link href="#/about">About</Nav.Link>        
       </Nav>
     </Navbar.Collapse>

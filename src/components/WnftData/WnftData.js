@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import "../WNFTABI.js"
 import { fetchCID as ipfsFetchCID } from  '../ipfs.js';
 
-const RPC_URL = 'https://goerli.infura.io/v3/6158037dd7f84107aa16d631689c6674';
+const RPC_URL = 'https://polygon-rpc.com/';
 
 
 
@@ -66,7 +66,11 @@ const fetchFishes = async (props) => {
                 chainId = await window.ethereum.request({ method: 'eth_chainId' });
         }catch{}
 
-        const provider = (window.ethereum && chainId === "0x5" && new ethers.providers.Web3Provider(window.ethereum )) || new ethers.providers.JsonRpcProvider(RPC_URL);
+        console.log("chainId: ", chainId);
+
+        const provider = (window.ethereum && chainId === "0x89" && new ethers.providers.Web3Provider(window.ethereum )) || new ethers.providers.JsonRpcProvider(RPC_URL);
+
+        console.log("provider: ", provider);
 
         const signer = provider.getSigner(0);
         if (signer !== null) {
@@ -75,7 +79,12 @@ const fetchFishes = async (props) => {
             let WNFTabi = global.wnft.abi;
             let NFTW_contract = new ethers.Contract(NFTWContractAddress, WNFTabi, provider);
 
+            console.log("NFTW_contract: ", NFTW_contract);
             const contractMinted = await NFTW_contract.amount();
+            let priceNow = await NFTW_contract.getTokenPrice();
+            priceNow = parseInt(priceNow.inWei._hex, 16);
+            console.log("priceNow: ", priceNow);
+            console.log("contractMinted: ", contractMinted);
             const contractMintedInt = parseInt(contractMinted._hex, 16)
             
             getAllFishes(contractMintedInt, NFTW_contract, props.ipfs).then((result) => {

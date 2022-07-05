@@ -25,7 +25,7 @@ function About() {
 
                                 <p>
                                      <ul>
-                                        <li> Mint a fish to open a blog</li>
+                                        <li> Mint an account to open a blog</li>
                                         <li> Join the community to get a voting right </li>
                                      </ul>
                                 </p>
@@ -90,7 +90,7 @@ function About() {
                                     No! Yes! Well, technically yes, but fishes are not NFTs that you are supposed to collcet because they're pretty. It's NFTs that gives you an account in Citadef, we call them WNFTs (website NFTs).
                                 </p> 
                                 <p>
-                                    Basically, you mint a fish to open an account in Citadef. This fish is a symbol of your account, and later of your voting power.
+                                    Basically, you mint an account to open a blog in Citadef. This fish is a symbol of your account, and later of your voting power.
                                 </p>
 
                                 

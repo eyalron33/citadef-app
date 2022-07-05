@@ -12,7 +12,7 @@ function Footer(props) {
                             <h5>Citadef</h5>
                             <ul>
                                 <li><a href="/#">All Fishes</a></li>
-                                <li><a href="/#/mint/select">Mint</a></li>
+                                <li><a href="/#/mint/select">Mint an Account</a></li>
                                 <li><a href="/#">Search</a></li>
                                 <li><a href="/#/govern">Govern</a></li>
                                 <li><a href="/#/world">Virtual World</a></li>

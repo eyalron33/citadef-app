@@ -51,7 +51,9 @@ function App() {
 
   const initState = {wallet: false, ownFish: false, address: null};
   const [userState, setUserState] = useState(initState);
-  const { ipfs, ipfsInitError, isIpfsReady } = useIpfsFactory({ commands: ['id'] })
+  const { ipfs, ipfsInitError, isIpfsReady } = useIpfsFactory({ commands: ['id'] });
+
+  const InvitationTokensNeeded = 0;
 
   // setup userState
   var signer;
@@ -68,7 +70,7 @@ function App() {
               if (res !== walletAddress) 
                 setWalletAddress(res[0]);
 
-              if (await invitationTokensAmount(res[0]) > 0)
+              if (await invitationTokensAmount(res[0]) >= InvitationTokensNeeded)
                 setHasInvitationToken(true);
 
               if (fishOwners[res[0]]) 

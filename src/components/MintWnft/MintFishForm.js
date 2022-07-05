@@ -65,7 +65,8 @@ const MintFishForm = props => {
         
         // check network
         props.provider.getNetwork().then((network) => {
-            if (network.name == "goerli") {
+            console.log("network: ", network);
+            if (network.name == "matic") {
                 props.ipfs.add(JSON.stringify(wnft_details)).then((cid) => {
                     setFishCID(cid.path);
                     mintWithTokenURI(props.NFTWWithSigner, props.walletAddress, seed, cid.path).then(()=>{
@@ -76,7 +77,7 @@ const MintFishForm = props => {
                 });
             } else {
                 setShowLoading(false);
-                alert("Please switch to network Georli to open a blog.");
+                alert("Please switch to Polygon network to mint an account.");
             }
         })
 
@@ -92,6 +93,7 @@ const MintFishForm = props => {
                     </div>
                     <div className="col-md-6">
                         <h3> #{seed} - cid {fishCID} </h3>
+                        <h5> An account costs 1$ in MATIC, and is minted on Polygon </h5>
 
                         <FishName setNick={setNick} nick={nick} nameError={nameError} />
                         <FishDescription setDesc={setDesc} desc={desc} descError={descError} />
@@ -113,7 +115,7 @@ const MintFishForm = props => {
                 <FishPost setPost={setPost}  post={post} />
                 <div className="row">
                     <div className="col-md-6">
-                        <button type="button" className="btn btn-primary btn-select-mint mt-3" onClick={handleClick}>Mint</button> 
+                        <button type="button" className="btn btn-primary btn-select-mint mt-3" onClick={handleClick}>Mint an account</button> 
                     </div>
                 </div>
             </>)

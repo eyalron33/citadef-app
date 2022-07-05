@@ -17,7 +17,10 @@ export const setTokenURI = async (contract, tokenId, tokenUri) => {
 
 export const mintWithTokenURI = async (contract, mintTo, tokenId, tokenUri) =>{
     try{
-        await handleContractTXWait(contract.mintWithTokenURI(ethers.utils.getAddress(mintTo), tokenId, tokenUri, { value: ethers.utils.parseEther("0.0001") } ))
+        // get price from the Oracle
+        let accountPriceinWei = await contract.getTokenPrice();
+
+        await handleContractTXWait(contract.mintWithTokenURI(ethers.utils.getAddress(mintTo), tokenId, tokenUri, { value: accountPriceinWei.inWei, gasLimit: 1000000 } ))
     }catch(e) {
         throw e.message;
     } 
