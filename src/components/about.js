@@ -55,10 +55,10 @@ function About() {
                                 <div className="spacer-single"></div>
                                 <h2><span className="text-uppercase">What's the state of the project?</span></h2>
                                 <p >
-                                    The project is currently in its first testing stage. It's hosted on Goerli network, and is opened only to 10 people from the .eth websites community. In this phase the blogging system is working, but the governence is still not.
+                                    The project is currently in its alpha stage. It's hosted on Polygon network, and anyone can open a blog for life for 1$ (to be paid in $MATIC). Currently the amount of blogs is limited to a 100. 
                                 </p> 
-                                <p>
-                                    Join our Discord community to be invited to participate in the next testing round.
+                                <p> 
+                                    In this phase the blogging system is working, but without images. Governence is still not implemented.
                                 </p>
 
                                 
