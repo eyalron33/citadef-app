@@ -1,5 +1,5 @@
-global.wnft = {
-  "address": "0xBd283c9e0ff8a36a5D6F06617E295fCBC8C78aAb",
+const wnftDataAbi = {
+  "address": "0x8572B4792eB800bbF18D0aAB56B81ba0A21Bb83E",
   "abi": [
     {
       "inputs": [
@@ -1089,4 +1089,6 @@ global.wnft = {
       "type": "function"
     }
   ]
-}
+};
+
+export default wnftDataAbi;

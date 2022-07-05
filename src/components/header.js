@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import {Helmet} from "react-helmet";
 import { ethers } from "ethers";
 import {Navbar, NavDropdown, Nav, Container} from 'react-bootstrap';
-import "./WNFTABI.js"
+import wnftDataAbi from "./WNFTABI";
 
 
 function ConnectWalletButton(props){
@@ -74,10 +74,10 @@ function Navigationbar(props) {
         let signer = props.provider.getSigner();
 
         // extract ABI
-        let NFTWabi = global.wnft.abi;
+        let NFTWabi = wnftDataAbi.abi;
 
         // create NFTW contract
-        let NFTWAddress = global.wnft.address;
+        let NFTWAddress = wnftDataAbi.address;
         let newNFTWContract = new ethers.Contract(NFTWAddress, NFTWabi, props.provider);
         props.setNFTWContract(newNFTWContract);
 

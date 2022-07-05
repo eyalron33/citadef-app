@@ -37,10 +37,11 @@ export default function useIpfsFactory () {
   async function startIpfs () {
     if (ipfs) {
       console.log('IPFS already started')
+      if (!isIpfsReady) setIpfsReady(true);
     }else{
       try {
         ipfs = create(CITADEF_IPFS_NODE)
-        const isOnline = await ipfs.isOnline();
+        const isOnline = ipfs.isOnline();
   
         if (isOnline) {
           setIpfsReady(true)

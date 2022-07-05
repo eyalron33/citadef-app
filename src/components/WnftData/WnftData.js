@@ -1,10 +1,12 @@
 import { ethers } from "ethers";
 import { useEffect } from "react";
-import "../WNFTABI.js"
+import wnftDataAbi from "../WNFTABI";
+
 import { fetchCID as ipfsFetchCID } from  '../ipfs.js';
 
-const RPC_URL = 'https://polygon-rpc.com/';
+import { getRpcUrl, getNetChainIdHex } from "../WnftContract/provider";
 
+const CONTRACT_CHAIN = 'polygon'
 
 
 const handleNToken = async (i, NFTW_contract, ipfs) => {
@@ -68,15 +70,15 @@ const fetchFishes = async (props) => {
 
         console.log("chainId: ", chainId);
 
-        const provider = (window.ethereum && chainId === "0x89" && new ethers.providers.Web3Provider(window.ethereum )) || new ethers.providers.JsonRpcProvider(RPC_URL);
+        const provider = (window.ethereum && chainId === getNetChainIdHex(CONTRACT_CHAIN) && new ethers.providers.Web3Provider(window.ethereum )) || new ethers.providers.JsonRpcProvider(getRpcUrl(CONTRACT_CHAIN));
 
         console.log("provider: ", provider);
 
         const signer = provider.getSigner(0);
         if (signer !== null) {
 
-            const NFTWContractAddress = global.wnft.address;
-            let WNFTabi = global.wnft.abi;
+            const NFTWContractAddress = wnftDataAbi.address;
+            let WNFTabi = wnftDataAbi.abi;
             let NFTW_contract = new ethers.Contract(NFTWContractAddress, WNFTabi, provider);
 
             console.log("NFTW_contract: ", NFTW_contract);
