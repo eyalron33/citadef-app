@@ -55,12 +55,14 @@ const MintFishForm = props => {
         setShowLoading(true);
 
         // prepare post
-        let first_post = {};
-        first_post.text = post;
-        first_post.publishTime = Date.now();
-        first_post.editTime = 0;
-        wnft_details.posts = {};
-        wnft_details.posts[first_post.publishTime] = first_post;
+        if (post !== "") {
+            let first_post = {};
+            first_post.text = post;
+            first_post.publishTime = Date.now();
+            first_post.editTime = 0;
+            wnft_details.posts = {};
+            wnft_details.posts[first_post.publishTime] = first_post;
+        }
         
         
         // check network
@@ -70,9 +72,11 @@ const MintFishForm = props => {
                 props.ipfs.add(JSON.stringify(wnft_details)).then((cid) => {
                     setFishCID(cid.path);
                     mintWithTokenURI(props.NFTWWithSigner, props.walletAddress, seed, cid.path).then(()=>{
-                        history.push(fishPageUrl(seed))
-                        setShowLoading(false);
-                        window.location.reload();
+                        setTimeout(function() {
+                            history.push(fishPageUrl(seed))
+                            setShowLoading(false);
+                            window.location.reload();
+                        }, 40000);
                     })
                 });
             } else {

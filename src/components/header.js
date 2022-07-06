@@ -6,13 +6,18 @@ import wnftDataAbi from "./WNFTABI";
 
 
 function ConnectWalletButton(props){
-    let button_text = "";
+    let button_text, classList = "";
 
-    if (!props.walletConnected)
+    if (!props.walletConnected) {
         button_text = "Connect";
-    else
+        classList = "btn-main cursor-pointer";
+    }
+    else {
         button_text = "Connected";
-    return (<a className="btn-main" onClick={props.connectEthWallet}><i className="icon_wallet_alt"></i><span>{button_text}</span></a>)
+        classList = "btn-main";
+    }
+    
+    return (<a className={classList} onClick={props.connectEthWallet}><i className="icon_wallet_alt"></i><span>{button_text}</span></a>)
 }
 
 function InvitationToken(props) {

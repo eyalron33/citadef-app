@@ -1837,7 +1837,7 @@ a.btn-border:hover a {
 
 .d-btn-close {
     color: #ffffff;
-    cursor: poInter;
+    cursor: pointer;
     text-align: center;
     display: block;
     text-align: center;
