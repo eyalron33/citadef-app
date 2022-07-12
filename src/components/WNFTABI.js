@@ -1,5 +1,5 @@
 const wnftDataAbi = {
-  "address": "0x8572B4792eB800bbF18D0aAB56B81ba0A21Bb83E",
+  "address": "0xA38EA7A5EC160d8053E13211f1545e778Ee28584",
   "abi": [
     {
       "inputs": [
