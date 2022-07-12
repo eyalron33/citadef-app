@@ -1,8 +1,11 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import {Helmet} from "react-helmet";
 import { ethers } from "ethers";
 import {Navbar, NavDropdown, Nav, Container} from 'react-bootstrap';
 import wnftDataAbi from "./WNFTABI";
+import { getNetChainIdHex } from "./WnftContract/provider";
+
+const CONTRACT_CHAIN = 'polygon'
 
 
 function ConnectWalletButton(props){
@@ -37,8 +40,16 @@ function Navigationbar(props) {
     const [contractLoaded, setContractLoaded] = useState(false);
     const [walletConnected, setWalletConnected] = useState(false);
 
+    useEffect(async () => {
         const { ethereum } = window;
-        if (ethereum && (props.provider == null)) {
+        let chainId = false;
+
+        try{
+            if (ethereum)
+                chainId = await ethereum.request({ method: 'eth_chainId' });
+        }catch{}
+
+        if (ethereum && chainId === getNetChainIdHex(CONTRACT_CHAIN) && (props.provider == null)) {
             const web3_provider = new ethers.providers.Web3Provider(ethereum);
             props.setProvider(web3_provider);
         }
@@ -56,11 +67,20 @@ function Navigationbar(props) {
 
                 });
             }
+    },
+    [props.provider])
+        
 
     const connectEthWallet = useCallback(async () => {
         // get the data from the api
         const { ethereum } = window;
-        if (ethereum) {
+        let chainId = false;
+        try{
+            if (ethereum)
+                chainId = await ethereum.request({ method: 'eth_chainId' });
+        }catch{}
+
+        if (ethereum && chainId === getNetChainIdHex(CONTRACT_CHAIN)) {
             const web3_provider = new ethers.providers.Web3Provider(ethereum);
             props.setProvider(web3_provider);
 
@@ -69,6 +89,9 @@ function Navigationbar(props) {
             });
 
         } else {
+            if (ethereum && chainId !== getNetChainIdHex(CONTRACT_CHAIN)){
+                alert('You must connect with Polygon network wallet')
+            }
             //window.alert("No Ethereum wallet is detected.");
             return;
           }

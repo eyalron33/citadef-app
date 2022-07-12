@@ -10,7 +10,7 @@ const CHAIN_IDS = {
 }
 
 function objectFlip(obj) {
-    return Object.entries(obj).reduce((acc, [key, value]) => (acc[value] = key, acc), {})
+    return Object.entries(obj).reduce((acc, [key, value]) => (acc[value] = key, acc))
 }
 
 const CHAINS_WITH_SPECIAL_RPC_URLS = {'polygon': 'https://polygon-rpc.com/'}

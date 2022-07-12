@@ -8,7 +8,7 @@ import Fish from "./fish"
 function CardSelecttoMint(props) {
     let fish_size = "";
 
-    let {width} = useWindowDimensions();
+    const {width} = useWindowDimensions();
     if (width > 992) {
         fish_size = "350";
     }

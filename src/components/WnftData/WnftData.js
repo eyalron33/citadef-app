@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import { useEffect } from "react";
 import wnftDataAbi from "../WNFTABI";
+import { MINTING_CONTRACT_ABI } from "./abis/MintingContract"
 
 import { fetchCID as ipfsFetchCID } from  '../ipfs.js';
 
@@ -83,11 +84,16 @@ const fetchFishes = async (props) => {
 
             console.log("NFTW_contract: ", NFTW_contract);
             const contractMinted = await NFTW_contract.amount();
-            let priceNow = await NFTW_contract.getTokenPrice();
-            priceNow = parseInt(priceNow.inWei._hex, 16);
-            console.log("priceNow: ", priceNow);
             console.log("contractMinted: ", contractMinted);
             const contractMintedInt = parseInt(contractMinted._hex, 16)
+
+            
+            NFTW_contract.mintingContract().then(async (mintingContractAddress) => {
+                const mintingContract = new ethers.Contract(mintingContractAddress, MINTING_CONTRACT_ABI, provider);
+                const maxAmount = await mintingContract.maxAmount();
+                props.setMaxAllowedMinting(maxAmount.toNumber());
+            })
+
             
             getAllFishes(contractMintedInt, NFTW_contract, props.ipfs).then((result) => {
                 const {owners, fishesCollection, totalFetched} = result;

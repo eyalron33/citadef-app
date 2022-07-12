@@ -48,6 +48,7 @@ function App() {
   const [walletAddress, setWalletAddress] = useState(null);
   const [ownFish, setOwnFish] = useState(false);
   const [hasInvitationToken, setHasInvitationToken] = useState(false);
+  const [maxAllowedMinting, setMaxAllowedMinting] = useState();
 
   const initState = {wallet: false, ownFish: false, address: null};
   const [userState, setUserState] = useState(initState);
@@ -70,8 +71,8 @@ function App() {
               if (res !== walletAddress) 
                 setWalletAddress(res[0]);
 
-              if (await invitationTokensAmount(res[0]) >= InvitationTokensNeeded)
-                setHasInvitationToken(true);
+              // if (await invitationTokensAmount(res[0]) >= InvitationTokensNeeded)
+              //   setHasInvitationToken(true);
 
               if (fishOwners[res[0]]) 
                 setOwnFish(true);
@@ -90,20 +91,20 @@ function App() {
 
   return (
     <Router basename="/">
-    <WnftData setMinted={setMinted} setFishes={setFishes} setFishowners={setFishowners}  ipfs={ipfs} isIpfsReady={isIpfsReady} />
+    <WnftData setMinted={setMinted} setFishes={setFishes} setFishowners={setFishowners}  ipfs={ipfs} isIpfsReady={isIpfsReady} maxAllowedMinting={maxAllowedMinting} setMaxAllowedMinting={setMaxAllowedMinting} />
     <ScrollToTop />
       <Switch>
         <Route exact path="/">
           {headerObj}
           <LandingScreen/>
-          <Citadef fishes={fishes} minted={minted}/>
+          <Citadef fishes={fishes} minted={minted} />
           <Footer/>
           <div className="bg-main-top"></div>
           <div className="bg-main-bottom"></div>
         </Route>
         <Route path="/mint/select">
         {headerObj}
-          <SelectWNFTtoMint/>
+          <SelectWNFTtoMint minted={minted} maxAllowedMinting={maxAllowedMinting} />
           <Footer/>
           <div className="bg-main-top"></div>
         </Route>
