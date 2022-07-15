@@ -10,17 +10,40 @@ import { getRpcUrl, getNetChainIdHex } from "../WnftContract/provider";
 const CONTRACT_CHAIN = 'polygon'
 
 
+const getIpfsData = async (ipfs, fishCID) => {
+    const fishJSON = await ipfsFetchCID(ipfs, fishCID);
+    const fishJSONData = JSON.parse(fishJSON);
+
+    return fishJSONData
+}
+
+
 const handleNToken = async (i, NFTW_contract, ipfs) => {
     const fishSeed = await NFTW_contract.NthToken(i);
     //fishSeed = parseInt(fishSeed._hex, 16);
     const fishSeedInt = ethers.BigNumber.from(parseInt(fishSeed._hex, 16).toString());
     const fishCID = await NFTW_contract.tokenURI(fishSeedInt);
 
-    const fishJSON = await ipfsFetchCID(ipfs, fishCID);
-    const fishJSONData = JSON.parse(fishJSON);
-    
+    // const fishJSON = await ipfsFetchCID(ipfs, fishCID);
+    // const fishJSONData = JSON.parse(fishJSON);
 
-    const owner = await NFTW_contract.ownerOf(fishSeedInt);
+
+    const results = await Promise.allSettled(
+        [getIpfsData(ipfs, fishCID), 
+            NFTW_contract.ownerOf(fishSeedInt)]
+    );
+
+    let fishJSONData;
+    if(results[0].status==='fulfilled'){
+        fishJSONData = results[0].value;
+    }
+
+    let owner;
+    if(results[1].status==='fulfilled'){
+        owner = results[1].value;
+    }
+
+    //const owner = await NFTW_contract.ownerOf(fishSeedInt);
     return {fishJSONData, fishSeed, owner};
     
   };
