@@ -1,8 +1,8 @@
-import FishCards from "./FishCards/FishCards";
+import FishCards from "../FishCards/FishCards";
 
-const HOME_PAGE_MAX_FISH_SHOW = 5
 
-function Citadef(props) {
+
+function ExploreFishes(props) {
 
     return ( 
          <section id="section-collections" className="pt30 pb30">
@@ -12,10 +12,10 @@ function Citadef(props) {
                     </div>
                     <div className="bg-main-middle-left d-none d-lg-block"></div>
                     <div className="bg-main-middle-right d-none d-lg-block"></div>
-                    <FishCards fishes={props.fishes} fishMaxShow={HOME_PAGE_MAX_FISH_SHOW} />
+                    <FishCards fishes={props.fishes}  />
                 </div>
             </section>
     )
 }
 
-export default Citadef;
+export default ExploreFishes;

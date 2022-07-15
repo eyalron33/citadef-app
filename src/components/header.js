@@ -4,6 +4,8 @@ import { ethers } from "ethers";
 import {Navbar, NavDropdown, Nav, Container} from 'react-bootstrap';
 import wnftDataAbi from "./WNFTABI";
 import { getNetChainIdHex } from "./WnftContract/provider";
+import { Link } from "react-router-dom";
+
 
 const CONTRACT_CHAIN = 'polygon'
 
@@ -125,7 +127,7 @@ function Navigationbar(props) {
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="me-auto">
-        <Nav.Link href="#">Explore</Nav.Link>
+        <Nav.Link href="#/explore">Explore</Nav.Link>
         <Nav.Link href="#/mint/select">Mint an account</Nav.Link>
         <Nav.Link href="#/about">About</Nav.Link>        
       </Nav>

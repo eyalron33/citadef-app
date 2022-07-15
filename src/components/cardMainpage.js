@@ -9,13 +9,16 @@ function CardMainpage(props) {
         history.push(personal_page);
       }
 
-    function postNum() {
-        if (props.posts) {
-            return Object.keys(props.posts).length.toString();
-        }
-        else
-            return 0;
-    }
+
+    const numPosts = props?.posts && Object.keys(props.posts).length
+
+    // function postNum() {
+    //     if (props.posts) {
+    //         return Object.keys(props.posts).length.toString();
+    //     }
+    //     else
+    //         return 0;
+    // }
     return ( 
    
         <div className={props.col}>
@@ -29,7 +32,7 @@ function CardMainpage(props) {
                     <div className="WNFT-mainpage-score">#{props.seed} </div>
                     {/*<div className="WNFT-mainpage-price">0.5 ETH </div>*/}
                     <div className="WNFT-mainpage-buyorbid"> Posts: </div>
-                    <div className="WNFT-mainpage-num"> {postNum()} </div>
+                    <div className="WNFT-mainpage-num"> {numPosts} </div>
 
                 </div>
             </div>

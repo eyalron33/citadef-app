@@ -20,7 +20,7 @@ import ScrollToTop from "./components/scroll_to_top";
 import WnftData from "./components/WnftData/WnftData";
 import invitationTokensAmount from "./components/InvitationTokenData/InvitationTokenData";
 import useIpfsFactory from "./components/hooks/useIpfsFactory"
-
+import ExploreFishes from "./components/ExploreFishes/ExploreFishes";
 
 import './components/WNFTABI.js'; 
 
@@ -102,6 +102,12 @@ function App() {
 
           <div className="bg-main-top"></div>
           <div className="bg-main-bottom"></div>
+        </Route>
+        <Route path="/explore">
+
+          <ExploreFishes fishes={fishes} minted={minted} />
+
+          <div className="bg-main-top"></div>
         </Route>
         <Route path="/mint/select">
 
