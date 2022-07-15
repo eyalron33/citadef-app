@@ -64,7 +64,9 @@ function EditPostPage(props) {
 
         //const client = create(CITADEF_IPFS_NODE);
         props.ipfs.add(JSON.stringify(fish)).then((cid) => {
-            setTokenURI(props.NFTWWithSigner, props.seed, cid.path).then(()=> 
+            const tokenUri = (!cid.path.startsWith('ipfs://') && 'ipfs://' + cid.path) || cid.path
+
+            setTokenURI(props.NFTWWithSigner, props.seed, tokenUri).then(()=> 
             {
                 history.push(fishPageUrl(props.seed))
                 setShowLoading(false)

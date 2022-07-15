@@ -30,7 +30,8 @@ const EditFishForm = props => {
         props.ipfs.add(JSON.stringify(wnft_details)).then((cid) => {
 
             setFishCID(cid.path);
-            setTokenURI(props.NFTWWithSigner, wnft_details.seed, cid.path).then(()=> {
+            const tokenUri = (!cid.path.startsWith('ipfs://') && 'ipfs://' + cid.path) || cid.path
+            setTokenURI(props.NFTWWithSigner, wnft_details.seed, tokenUri).then(()=> {
                 setShowLoading(false);
             }).catch(() => setShowLoading(false));
 

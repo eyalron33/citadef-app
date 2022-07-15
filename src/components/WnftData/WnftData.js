@@ -11,10 +11,11 @@ const CONTRACT_CHAIN = 'polygon'
 
 
 const handleNToken = async (i, NFTW_contract, ipfs) => {
-    let fishSeed = await NFTW_contract.NthToken(i);
+    const fishSeed = await NFTW_contract.NthToken(i);
     //fishSeed = parseInt(fishSeed._hex, 16);
     const fishSeedInt = ethers.BigNumber.from(parseInt(fishSeed._hex, 16).toString());
-    let fishCID = await NFTW_contract.tokenURI(fishSeedInt);
+    const fishCID = await NFTW_contract.tokenURI(fishSeedInt);
+
     const fishJSON = await ipfsFetchCID(ipfs, fishCID);
     const fishJSONData = JSON.parse(fishJSON);
     
