@@ -28,7 +28,7 @@ function FishCards(props) {
         const big_fish = fishes[fishes_keys[i*5]];
         let big_fish_element = 
                 <div className="col-md-6">
-                <CardMainpage nick={big_fish.nick} seed={big_fish.seed} posts={big_fish.posts} col="col-md-12" size={big_fish_size} key={big_fish.seed} direction={direction} />
+                <CardMainpage key={'fish0'} nick={big_fish.nick} seed={big_fish.seed} posts={big_fish.posts} col="col-md-12" size={big_fish_size} key={big_fish.seed} direction={direction} />
                 </div>;
 
         direction = (direction=="right") ? direction = "left" : direction = "right";
@@ -36,13 +36,13 @@ function FishCards(props) {
         if (i < Math.floor((fishes_keys.length-1)/5)) {
             for (let j=1; j<5; j++) {
                 let small_fish = fishes[fishes_keys[5*i+j]];
-                small_fishes.push(<CardMainpage nick={small_fish.nick} seed={small_fish.seed} key={small_fish.seed} posts={small_fish.posts} col="col-md-6" size={small_fish_size} direction={direction}/>);
+                small_fishes.push(<CardMainpage key={'fish' + i.toString() + '|' + j.toString()} nick={small_fish.nick} seed={small_fish.seed} key={small_fish.seed} posts={small_fish.posts} col="col-md-6" size={small_fish_size} direction={direction}/>);
             }
 
         } else {
              for (let j=1; j<=(fishes_keys.length-1) % 5; j++) {
                  let small_fish = fishes[fishes_keys[5*i+j]];
-                 small_fishes.push(<CardMainpage nick={small_fish.nick} seed={small_fish.seed} key={small_fish.seed} posts={small_fish.posts} col="col-md-6" size={small_fish_size} direction={direction}/>);
+                 small_fishes.push(<CardMainpage key={'fish' + i.toString() + '|' + j.toString()} nick={small_fish.nick} seed={small_fish.seed} key={small_fish.seed} posts={small_fish.posts} col="col-md-6" size={small_fish_size} direction={direction}/>);
              }
         }
 

@@ -86,7 +86,7 @@ const fetchFishes = async (props) => {
             const contractMinted = await NFTW_contract.amount();
             console.log("contractMinted: ", contractMinted);
             const contractMintedInt = parseInt(contractMinted._hex, 16)
-
+            props.setMinted(contractMinted.toNumber());
             
             NFTW_contract.mintingContract().then(async (mintingContractAddress) => {
                 const mintingContract = new ethers.Contract(mintingContractAddress, MINTING_CONTRACT_ABI, provider);
