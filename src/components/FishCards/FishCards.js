@@ -22,7 +22,7 @@ function FishCards(props) {
     const FISH_IN_ROW = 5
 
     let direction = "right";
-    for (let i=0; i<= Math.floor((fishes_keys.length-1)/FISH_IN_ROW) && (!props.fishMaxShow || (i*FISH_IN_ROW < props.fishMaxShow)); i++) {
+    for (let i=0; i<= Math.floor((fishes_keys.length-1)/FISH_IN_ROW); i++) {
 
         const big_fish = fishes[fishes_keys[i*FISH_IN_ROW]];
         let big_fish_element = 

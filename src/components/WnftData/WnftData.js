@@ -43,7 +43,6 @@ const handleNToken = async (i, NFTW_contract, ipfs) => {
         owner = results[1].value;
     }
 
-    //const owner = await NFTW_contract.ownerOf(fishSeedInt);
     return {fishJSONData, fishSeed, owner};
     
   };
