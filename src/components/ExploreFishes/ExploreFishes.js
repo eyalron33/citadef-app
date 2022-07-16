@@ -41,21 +41,17 @@ function ExploreFishes(props) {
          <section id="section-collections" className="pt30 pb30">
                 <div className="container relative-position">
                     <div className="col-lg-12 top-100">
-                        <h2 className="style-2">The Citadef Council -- number of fishes: {props.minted}</h2>
-                        {(props.minted!==0) && (props.fishes!==[])&& (<h3 className="style-2">Page {pageOffset+1}</h3>)}
+                        <h2 className="style-2">The Citadef Council members count: {props.minted}</h2>
                     </div>
-                    <div className="bg-main-middle-left d-none d-lg-block"></div>
-                    <div className="bg-main-middle-right d-none d-lg-block"></div>
-                    <FishCards fishes={currentItems}  />
                     {(props.minted!==0) && (props.fishes!==[]) && (<ReactPaginate
                         previousLabel="Previous"
                         nextLabel="Next"
-                        pageClassName="page-item"
-                        pageLinkClassName="page-link"
-                        previousClassName="page-item"
-                        previousLinkClassName="page-link"
-                        nextClassName="page-item"
-                        nextLinkClassName="page-link"
+                        pageClassName="btn btn-primary btn-select-showmore"
+                        pageLinkClassName="page-link bg-info text-dark"
+                        previousClassName="btn btn-primary btn-select-showmore"
+                        previousLinkClassName="page-link text-dark"
+                        nextClassName="btn btn-primary btn-select-showmore"
+                        nextLinkClassName="page-link text-dark"
                         breakLabel="..."
                         breakClassName="page-item"
                         breakLinkClassName="page-link"
@@ -67,6 +63,9 @@ function ExploreFishes(props) {
                         activeClassName="active"
                         forcePage={pageOffset}
                     />)}
+                    <div className="bg-main-middle-left d-none d-lg-block"></div>
+                    <div className="bg-main-middle-right d-none d-lg-block"></div>
+                    <FishCards fishes={currentItems}  />
                 </div>
             </section>
     )
