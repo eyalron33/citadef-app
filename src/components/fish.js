@@ -30,7 +30,7 @@ class GroovyFish {
         }
     }
 
-    draw(svg, size) {
+    draw(svg, size, frame) {
         let r = size/3.5;
         let points_num = Math.round(8+this.rand()*4);
 
@@ -43,7 +43,8 @@ class GroovyFish {
         let pattern_color2 = this.getColor();
 
 
-        svg = this.rectangle(0.05*size, 0.05*size, 0.9*size, 0.9*size, svg);
+        if (frame == "rectangle") 
+            svg = this.rectangle(0.05*size, 0.05*size, 0.9*size, 0.9*size, svg);
 
         svg = this.addMultyBezier(points, svg, this.clip_path_name);
 
@@ -317,7 +318,7 @@ function Fish(props) {
     svg = createEmptySVG(svg, props.size, props.size, props.direction || "right");
 
     let fish = new GroovyFish(seed_func, seed_num);
-    fish.draw(svg, props.size);
+    fish.draw(svg, props.size, props.frame || "rectangle");
 
     function createEmptySVG(elem, width, height, direction) {
         // let elem = document.getElementById(id);
