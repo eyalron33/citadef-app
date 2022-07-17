@@ -41,7 +41,7 @@ function SinglePostPage(props) {
                 <div className="col-xl-8">
                     <div className="d-flex mb-20">
                         
-                        <Fish seed={props.seed} size="100" direction="left" frame="none"/>
+                        <Fish seed={props.seed} size="100" direction="right" frame="none"/>
                         
                         <div className="d-flex flex-column ml-auto">
                             <h4 className="pt-3">
