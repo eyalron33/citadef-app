@@ -28,7 +28,9 @@ export const publishTimeDisplay = timestamp =>{
 
     const year = d.getFullYear();
 
-    return day + " " + month + " " + year;
+
+
+    return day + " " + month + ((new Date().getFullYear()==year)?"":" " + year);
 
 }
 

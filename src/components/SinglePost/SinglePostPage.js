@@ -38,39 +38,23 @@ function SinglePostPage(props) {
     <section id="post-header" className="pt30 pb30">
         <div id="content" className="container">
             <div className="row d-flex justify-content-center">
-                <div className="col-md-4 d-flex">
-                    <div >
-                        <div>
-                            <div className="profile_avatar d-flex">
-                                <div>
-                                    <div className="mb-20">
-                                        <h4>
-                                            <p>Post by {fish.nick}</p>   
-                                        </h4>
-                                        <div>
-                                            {postPublishTime}
-                                        </div>
-                                    </div>
-                                </div>
+                <div className="col-xl-8">
+                    <div className="d-flex mb-20">
+                        
+                        <Fish seed={props.seed} size="100" direction="left" frame="none"/>
+                        
+                        <div className="d-flex flex-column ml-auto">
+                            <h4 className="pt-3">
+                                <p>Post by {fish.nick}</p>   
+                            </h4>
+                            <div className="d-flex flex-row">
+                                {postPublishTime}
+                                <div className="mx-2"><EditButton seed={props.seed} walletAddress={props.walletAddress} fishOwners={props.fishOwners} post={props.post} /></div>
                             </div>
                         </div>
-                        <EditButton seed={props.seed} walletAddress={props.walletAddress} fishOwners={props.fishOwners} post={props.post} />
+                        
                     </div>
                 </div>
-                <div className="col-md-4">
-                    <div >
-                        <div>
-                            <div className="profile_avatar float-end">
-                                <div>
-                                    <div className="mb-20">
-                                        <Fish seed={props.seed} size="100" direction="left" frame="none"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
             </div>
         </div>
     </section>
