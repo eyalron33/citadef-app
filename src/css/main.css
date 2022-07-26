@@ -1837,7 +1837,7 @@ a.btn-border:hover a {
 
 .d-btn-close {
     color: #ffffff;
-    cursor: poInter;
+    cursor: pointer;
     text-align: center;
     display: block;
     text-align: center;
@@ -2794,4 +2794,13 @@ hr.solid {
 .navbar-light .navbar-nav .nav-link {
     font-size:  20px;
     font-weight: bold;
+}
+
+.post-body-html {
+    overflow: hidden;
+}
+
+.post-body-html img {
+    object-fit: cover;
+    max-width: 100%;
 }

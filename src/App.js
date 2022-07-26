@@ -20,7 +20,7 @@ import ScrollToTop from "./components/scroll_to_top";
 import WnftData from "./components/WnftData/WnftData";
 import invitationTokensAmount from "./components/InvitationTokenData/InvitationTokenData";
 import useIpfsFactory from "./components/hooks/useIpfsFactory"
-
+import ExploreFishes from "./components/ExploreFishes/ExploreFishes";
 
 import './components/WNFTABI.js'; 
 
@@ -48,10 +48,13 @@ function App() {
   const [walletAddress, setWalletAddress] = useState(null);
   const [ownFish, setOwnFish] = useState(false);
   const [hasInvitationToken, setHasInvitationToken] = useState(false);
+  const [maxAllowedMinting, setMaxAllowedMinting] = useState();
 
   const initState = {wallet: false, ownFish: false, address: null};
   const [userState, setUserState] = useState(initState);
-  const { ipfs, ipfsInitError, isIpfsReady } = useIpfsFactory({ commands: ['id'] })
+  const { ipfs, ipfsInitError, isIpfsReady } = useIpfsFactory({ commands: ['id'] });
+
+  const InvitationTokensNeeded = 0;
 
   // setup userState
   var signer;
@@ -68,8 +71,8 @@ function App() {
               if (res !== walletAddress) 
                 setWalletAddress(res[0]);
 
-              if (await invitationTokensAmount(res[0]) > 0)
-                setHasInvitationToken(true);
+              // if (await invitationTokensAmount(res[0]) >= InvitationTokensNeeded)
+              //   setHasInvitationToken(true);
 
               if (fishOwners[res[0]]) 
                 setOwnFish(true);
@@ -88,35 +91,42 @@ function App() {
 
   return (
     <Router basename="/">
-    <WnftData setMinted={setMinted} setFishes={setFishes} setFishowners={setFishowners}  ipfs={ipfs} isIpfsReady={isIpfsReady} />
+      <WnftData setMinted={setMinted} setFishes={setFishes} setFishowners={setFishowners}  ipfs={ipfs} isIpfsReady={isIpfsReady} maxAllowedMinting={maxAllowedMinting} setMaxAllowedMinting={setMaxAllowedMinting} />
+      {headerObj}
     <ScrollToTop />
       <Switch>
         <Route exact path="/">
-          {headerObj}
+         
           <LandingScreen/>
-          <Citadef fishes={fishes} minted={minted}/>
-          <Footer/>
+          <Citadef fishes={fishes} minted={minted} />
+
           <div className="bg-main-top"></div>
           <div className="bg-main-bottom"></div>
         </Route>
+        <Route path="/explore">
+
+          <ExploreFishes fishes={fishes} minted={minted} />
+
+          <div className="bg-main-top"></div>
+        </Route>
         <Route path="/mint/select">
-        {headerObj}
-          <SelectWNFTtoMint/>
-          <Footer/>
+
+          <SelectWNFTtoMint minted={minted} maxAllowedMinting={maxAllowedMinting} />
+
           <div className="bg-main-top"></div>
         </Route>
         <Route path="/mint/details/:seed">
-        {headerObj}
+
           <MintWNFTScreen NFTWWithSigner={NFTWWithSigner} provider={provider} walletAddress={walletAddress}  ipfs={ipfs} isIpfsReady={isIpfsReady} />
-          <Footer/>
+
         </Route>
         <Route path="/personal/edit/:seed">
-        {headerObj}
+
           <EditWnft NFTWWithSigner={NFTWWithSigner} fishes={fishes} walletAddress={walletAddress}  ipfs={ipfs} isIpfsReady={isIpfsReady} />
-          <Footer/>
+
         </Route>
         <Route path="/personal/post/edit/:seed/:post">
-        {headerObj}
+
           <EditPost 
             NFTWWithSigner= {NFTWWithSigner}
             fishes ={fishes}
@@ -124,16 +134,16 @@ function App() {
             fishOwners={fishOwners}
             ipfs={ipfs} isIpfsReady={isIpfsReady}
           />
-          <Footer/>
+
           <div className="bg-blog-top"></div>
         </Route>
         <Route path="/personal/post/:seed/:post">
-        {headerObj}
+
           <SinglePost fishes ={fishes} walletAddress={walletAddress} fishOwners = {fishOwners}  />
-          <Footer/>
+
         </Route>
         <Route path="/personal/new/:seed">
-        {headerObj}
+
           <NewPost 
             NFTWWithSigner= {NFTWWithSigner}
             fishes ={fishes}
@@ -141,25 +151,25 @@ function App() {
             fishOwners={fishOwners}
             ipfs={ipfs} isIpfsReady={isIpfsReady}
           />
-          <Footer/>
+
           <div className="bg-blog-top"> </div>
         </Route>
         <Route path="/personal/:seed">
-        {headerObj}
+
           <FishPersonal fishes ={fishes} ownFish={ownFish} walletAddress={walletAddress} fishOwners = {fishOwners}/>
-          <Footer/>
+
           <div className="bg-blog-top"> </div>
         </Route>
         <Route path="/404">
-        {headerObj}
+
           <Error404/>
-          <Footer/>
+
           <div className="bg-blog-top"> </div>
         </Route>
         <Route path="/about">
-        {headerObj}
+
           <About/>
-          <Footer/>
+
           <div className="bg-main-top"></div>
         </Route>
         
@@ -167,46 +177,47 @@ function App() {
          * Screens which are still under construction
          **********************************************/
         <Route path="/govern">
-        {headerObj}
+
           <UnderConstruction 
             title="governing section"
             reason="Governing will come once the decentralized accounts and blogging is more stable. Recall, the idea is that one full member = one vote, but it should take a while to gain enough reputation to become a full member."/>
-          <Footer/>
+
           <div className="bg-main-top"></div>
         </Route>
         <Route path="/world">
-        {headerObj}
+
           <UnderConstruction 
             title="Virtual Fish world"
             reason="A virtual fish world is just something that sounds cool in our head, but we actually have no idea what do we mean by this. Suggestions are welcomed!"/>
-          <Footer/>
+
           <div className="bg-main-top"></div>
         </Route>
         <Route path="/plot">
-        {headerObj}
+
           <UnderConstruction 
             title="Plot in the Virtual Fish world"
             reason="A virtual fish world is just something that sounds cool in our head, and even cooler then this, it sounds nice to have a plot in this world. However, we really don't know what it means yet."/>
-          <Footer/>
+
           <div className="bg-main-top"></div>
         </Route>
         <Route path="/democraticweb">
-        {headerObj}
+       
           <UnderConstruction 
             title="Democratic Web"
             reason="Here should be a link to an article of our vision to what the democratic web should be like. Alas, we did not write it yet! So, be patient, and don't wait in the sun."/>
-          <Footer/>
+
           <div className="bg-main-top"></div>
         </Route>
         <Route path="/mailinglist">
-        {headerObj}
+        
           <UnderConstruction 
             title="Mailing List"
             reason="We don't have a mailing list yet. Not sure we will ever have. But we needed another link to put in the footer, and mailing list sounds 'professional', right?"/>
-          <Footer/>
+          
           <div className="bg-main-top"></div>
         </Route>
       </Switch>
+      <Footer/>
     </Router>
   );
 }

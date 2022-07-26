@@ -28,33 +28,36 @@ const MintWNFTScreen = (props) => {
     const [seedForGeneration, setSeedForGeneration] = useState(Math.floor(Math.random() * 1000000000000));
     const rand = sfc32(seedForGeneration.toString(), seedForGeneration.toString(), seedForGeneration.toString(), seedForGeneration.toString());
     const [moreFishSeeds, setMoreFishSeeds] = useState([rand()* 100000000000000000, rand()* 100000000000000000, rand()* 100000000000000000])
-    
-    
-    
+        
        
     return ( 
-            <section id="section-collections" className="pt30 pb30">
-                <Helmet>
-                  <title>Citadef - Mint your fish! Join the Citadel!</title>
-                </Helmet>
-                <div className="container">
-                    <div className="col-lg-12 top-100">
-                        <h1 className="style-2">Mint a fish</h1>
-                    </div>
+<section id="section-collections" className="pt30 pb30">
+    <Helmet>
+        <title>Citadef - Mint your fish! Join the Citadel!</title>
+    </Helmet>
+    <div className="container">
+        <div className="col-lg-12 top-100">
+            <h1 className="style-2">Mint a fish</h1>
+        </div>
 
-                   <MintFishForm NFTWWithSigner={NFTWWithSigner} provider={provider} walletAddress={props.walletAddress} ipfs={props.ipfs} />
-                    
-
-                    <div className="col-lg-12 pt-5">
-                        <h1 className="style-2">Mint other fishes</h1>
-                        <div className="row">
-                            <CardSelecttoMint key={0} seed={moreFishSeeds[0]}/>
-                            <CardSelecttoMint key={1} seed={moreFishSeeds[1]}/>
-                            <CardSelecttoMint key={2} seed={moreFishSeeds[2]}/>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        {NFTWWithSigner && (
+<>
+    <MintFishForm NFTWWithSigner={NFTWWithSigner} provider={provider} walletAddress={props.walletAddress} ipfs={props.ipfs} />
+    <div className="col-lg-12 pt-5">
+        <h1 className="style-2">Mint other fishes</h1>
+        <div className="row">
+            <CardSelecttoMint key={0} seed={moreFishSeeds[0]}/>
+            <CardSelecttoMint key={1} seed={moreFishSeeds[1]}/>
+            <CardSelecttoMint key={2} seed={moreFishSeeds[2]}/>
+        </div>
+    </div>
+</>)}
+        {!NFTWWithSigner && 
+        (<div className="col-lg-12 pt-5">
+            <h1 className="style-2">You must connect to your Polygon wallet to mint a fish</h1>
+        </div>)}
+    </div>
+</section>
     )
 }
 

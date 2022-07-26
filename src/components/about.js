@@ -25,7 +25,7 @@ function About() {
 
                                 <p>
                                      <ul>
-                                        <li> Mint a fish to open a blog</li>
+                                        <li> Mint an account to open a blog</li>
                                         <li> Join the community to get a voting right </li>
                                      </ul>
                                 </p>
@@ -55,10 +55,10 @@ function About() {
                                 <div className="spacer-single"></div>
                                 <h2><span className="text-uppercase">What's the state of the project?</span></h2>
                                 <p >
-                                    The project is currently in its first testing stage. It's hosted on Goerli network, and is opened only to 10 people from the .eth websites community. In this phase the blogging system is working, but the governence is still not.
+                                    The project is currently in its alpha stage. It's hosted on Polygon network, and anyone can open a blog for life for 1$ (to be paid in $MATIC). Currently the amount of blogs is limited to a 100. 
                                 </p> 
-                                <p>
-                                    Join our Discord community to be invited to participate in the next testing round.
+                                <p> 
+                                    In this phase the blogging system is working, but without images. Governence is still not implemented.
                                 </p>
 
                                 
@@ -90,7 +90,7 @@ function About() {
                                     No! Yes! Well, technically yes, but fishes are not NFTs that you are supposed to collcet because they're pretty. It's NFTs that gives you an account in Citadef, we call them WNFTs (website NFTs).
                                 </p> 
                                 <p>
-                                    Basically, you mint a fish to open an account in Citadef. This fish is a symbol of your account, and later of your voting power.
+                                    Basically, you mint an account to open a blog in Citadef. This fish is a symbol of your account, and later of your voting power.
                                 </p>
 
                                 

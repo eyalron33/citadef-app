@@ -1,22 +1,48 @@
 import { ethers } from "ethers";
 import { useEffect } from "react";
-import "../WNFTABI.js"
+import wnftDataAbi from "../WNFTABI";
+import { MINTING_CONTRACT_ABI } from "./abis/MintingContract"
+
 import { fetchCID as ipfsFetchCID } from  '../ipfs.js';
 
-const RPC_URL = 'https://goerli.infura.io/v3/6158037dd7f84107aa16d631689c6674';
+import { getRpcUrl, getNetChainIdHex } from "../WnftContract/provider";
 
+const CONTRACT_CHAIN = 'polygon'
+
+
+const getIpfsData = async (ipfs, fishCID) => {
+    const fishJSON = await ipfsFetchCID(ipfs, fishCID);
+    const fishJSONData = JSON.parse(fishJSON);
+
+    return fishJSONData
+}
 
 
 const handleNToken = async (i, NFTW_contract, ipfs) => {
-    let fishSeed = await NFTW_contract.NthToken(i);
+    const fishSeed = await NFTW_contract.NthToken(i);
     //fishSeed = parseInt(fishSeed._hex, 16);
     const fishSeedInt = ethers.BigNumber.from(parseInt(fishSeed._hex, 16).toString());
-    let fishCID = await NFTW_contract.tokenURI(fishSeedInt);
-    const fishJSON = await ipfsFetchCID(ipfs, fishCID);
-    const fishJSONData = JSON.parse(fishJSON);
-    
+    const fishCID = await NFTW_contract.tokenURI(fishSeedInt);
 
-    const owner = await NFTW_contract.ownerOf(fishSeedInt);
+    // const fishJSON = await ipfsFetchCID(ipfs, fishCID);
+    // const fishJSONData = JSON.parse(fishJSON);
+
+
+    const results = await Promise.allSettled(
+        [getIpfsData(ipfs, fishCID), 
+            NFTW_contract.ownerOf(fishSeedInt)]
+    );
+
+    let fishJSONData;
+    if(results[0].status==='fulfilled'){
+        fishJSONData = results[0].value;
+    }
+
+    let owner;
+    if(results[1].status==='fulfilled'){
+        owner = results[1].value;
+    }
+
     return {fishJSONData, fishSeed, owner};
     
   };
@@ -66,17 +92,31 @@ const fetchFishes = async (props) => {
                 chainId = await window.ethereum.request({ method: 'eth_chainId' });
         }catch{}
 
-        const provider = (window.ethereum && chainId === "0x5" && new ethers.providers.Web3Provider(window.ethereum )) || new ethers.providers.JsonRpcProvider(RPC_URL);
+        console.log("chainId: ", chainId);
+
+        const provider = (window.ethereum && chainId === getNetChainIdHex(CONTRACT_CHAIN) && new ethers.providers.Web3Provider(window.ethereum )) || new ethers.providers.JsonRpcProvider(getRpcUrl(CONTRACT_CHAIN));
+
+        console.log("provider: ", provider);
 
         const signer = provider.getSigner(0);
         if (signer !== null) {
 
-            const NFTWContractAddress = global.wnft.address;
-            let WNFTabi = global.wnft.abi;
+            const NFTWContractAddress = wnftDataAbi.address;
+            let WNFTabi = wnftDataAbi.abi;
             let NFTW_contract = new ethers.Contract(NFTWContractAddress, WNFTabi, provider);
 
+            console.log("NFTW_contract: ", NFTW_contract);
             const contractMinted = await NFTW_contract.amount();
+            console.log("contractMinted: ", contractMinted);
             const contractMintedInt = parseInt(contractMinted._hex, 16)
+            props.setMinted(contractMinted.toNumber());
+            
+            NFTW_contract.mintingContract().then(async (mintingContractAddress) => {
+                const mintingContract = new ethers.Contract(mintingContractAddress, MINTING_CONTRACT_ABI, provider);
+                const maxAmount = await mintingContract.maxAmount();
+                props.setMaxAllowedMinting(maxAmount.toNumber());
+            })
+
             
             getAllFishes(contractMintedInt, NFTW_contract, props.ipfs).then((result) => {
                 const {owners, fishesCollection, totalFetched} = result;

@@ -3,8 +3,9 @@ import { useEffect } from "react";
 import "./InviteTokenABI.js"
 
 
-const RPC_URL = 'https://goerli.infura.io/v3/6158037dd7f84107aa16d631689c6674';
+import { getRpcUrl, getNetChainIdHex } from "../WnftContract/provider";
 
+const CONTRACT_CHAIN = 'polygon'
 
 const invitationTokensAmount = async (address) => {
     try {
@@ -15,7 +16,7 @@ const invitationTokensAmount = async (address) => {
                 chainId = await window.ethereum.request({ method: 'eth_chainId' });
         }catch{}
 
-        const provider = (window.ethereum && chainId === "0x5" && new ethers.providers.Web3Provider(window.ethereum )) || new ethers.providers.JsonRpcProvider(RPC_URL);
+        const provider = (window.ethereum && chainId === getNetChainIdHex(CONTRACT_CHAIN) && new ethers.providers.Web3Provider(window.ethereum )) || new ethers.providers.JsonRpcProvider(getRpcUrl(CONTRACT_CHAIN));
 
         const signer = provider.getSigner(0);
         if (signer !== null) {

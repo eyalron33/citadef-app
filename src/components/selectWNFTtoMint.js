@@ -11,6 +11,8 @@ function SelectWNFTtoMint(props) {
 
     const [count, setCount] = useState("1");
 
+    const maxMintingReached = props.minted >= props.maxAllowedMinting
+
     function showOtherFishes(e) {
         e.currentTarget.blur();
         setCount(count+1);
@@ -36,35 +38,41 @@ function SelectWNFTtoMint(props) {
     const rand = sfc32(seed.toString(), seed.toString(), seed.toString(), seed.toString());
    
     return ( 
-            <section id="section-collections" className="pt30 pb30">
-                <Helmet>
-                  <title>Citadef - Select a fish to mint</title>
-                </Helmet>
-                <div className="container">
-                    <div className="col-lg-12 top-100">
-                        <h1 className="style-2">Select your fishy</h1>
-                    </div>
-                    <div className="row justify-content-center">
-                        <CardSelecttoMint seed={rand()* 100000000000000000}/>
-                        <CardSelecttoMint seed={rand()* 100000000000000000}/>
-                        <CardSelecttoMint seed={rand()* 100000000000000000}/>
-                        <CardSelecttoMint seed={rand()* 100000000000000000}/>
-                        <CardSelecttoMint seed={rand()* 100000000000000000}/>
-                        <CardSelecttoMint seed={rand()* 100000000000000000}/>
-                        <CardSelecttoMint seed={rand()* 100000000000000000}/>
-                        <CardSelecttoMint seed={rand()* 100000000000000000}/>
-                        <CardSelecttoMint seed={rand()* 100000000000000000}/>
+<section id="section-mint" className="pt30 pb30">
+    <Helmet>
+        <title>Citadef - Select a fish for your account</title>
+    </Helmet>
+    <div className="container">
+        {!maxMintingReached && (
+<>
+    <div className="col-lg-12 top-100">
+        <h1 className="style-2">Select your fishy</h1>
+    </div>
+    <div className="row justify-content-center">
+        <CardSelecttoMint seed={rand()* 100000000000000000}/>
+        <CardSelecttoMint seed={rand()* 100000000000000000}/>
+        <CardSelecttoMint seed={rand()* 100000000000000000}/>
+        <CardSelecttoMint seed={rand()* 100000000000000000}/>
+        <CardSelecttoMint seed={rand()* 100000000000000000}/>
+        <CardSelecttoMint seed={rand()* 100000000000000000}/>
+        <CardSelecttoMint seed={rand()* 100000000000000000}/>
+        <CardSelecttoMint seed={rand()* 100000000000000000}/>
+        <CardSelecttoMint seed={rand()* 100000000000000000}/>
 
-                    </div>
-                
-                    <div className="text-center"> 
-                        <button type="button" className="btn btn-primary btn-select-showmore" onClick={(e)=> showOtherFishes(e)}>
-                            These fishes are ugly! Show me others!
-                        </button>
-                    </div>
-                                
-                </div>
-            </section>
+    </div>
+
+    <div className="text-center"> 
+        <button type="button" className="btn btn-primary btn-select-showmore" onClick={(e)=> showOtherFishes(e)}>
+            These fishes are ugly! Show me others!
+        </button>
+    </div>
+</>)}
+    {maxMintingReached && (<div className="col-lg-12 top-100">
+        <h1 className="style-2">Sorry no more fishes in the lake</h1>
+    </div>)}
+                    
+    </div>
+</section>
     )
 }
 

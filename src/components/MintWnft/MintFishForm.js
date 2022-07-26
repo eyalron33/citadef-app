@@ -55,28 +55,33 @@ const MintFishForm = props => {
         setShowLoading(true);
 
         // prepare post
-        let first_post = {};
-        first_post.text = post;
-        first_post.publishTime = Date.now();
-        first_post.editTime = 0;
-        wnft_details.posts = {};
-        wnft_details.posts[first_post.publishTime] = first_post;
+        if (post !== "") {
+            let first_post = {};
+            first_post.text = post;
+            first_post.publishTime = Date.now();
+            first_post.editTime = 0;
+            wnft_details.posts = {};
+            wnft_details.posts[first_post.publishTime] = first_post;
+        }
         
         
         // check network
         props.provider.getNetwork().then((network) => {
-            if (network.name == "goerli") {
+            console.log("network: ", network);
+            if (network.name == "matic") {
                 props.ipfs.add(JSON.stringify(wnft_details)).then((cid) => {
                     setFishCID(cid.path);
                     mintWithTokenURI(props.NFTWWithSigner, props.walletAddress, seed, cid.path).then(()=>{
-                        history.push(fishPageUrl(seed))
-                        setShowLoading(false);
-                        window.location.reload();
+                        setTimeout(function() {
+                            history.push(fishPageUrl(seed))
+                            setShowLoading(false);
+                            window.location.reload();
+                        }, 40000);
                     })
                 });
             } else {
                 setShowLoading(false);
-                alert("Please switch to network Georli to open a blog.");
+                alert("Please switch to Polygon network to mint an account.");
             }
         })
 
@@ -92,6 +97,7 @@ const MintFishForm = props => {
                     </div>
                     <div className="col-md-6">
                         <h3> #{seed} - cid {fishCID} </h3>
+                        <h5> An account costs 1$ in MATIC, and is minted on Polygon </h5>
 
                         <FishName setNick={setNick} nick={nick} nameError={nameError} />
                         <FishDescription setDesc={setDesc} desc={desc} descError={descError} />
@@ -113,7 +119,7 @@ const MintFishForm = props => {
                 <FishPost setPost={setPost}  post={post} />
                 <div className="row">
                     <div className="col-md-6">
-                        <button type="button" className="btn btn-primary btn-select-mint mt-3" onClick={handleClick}>Mint</button> 
+                        <button type="button" className="btn btn-primary btn-select-mint mt-3" onClick={handleClick}>Mint an account</button> 
                     </div>
                 </div>
             </>)

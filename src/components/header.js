@@ -1,30 +1,40 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import {Helmet} from "react-helmet";
 import { ethers } from "ethers";
 import {Navbar, NavDropdown, Nav, Container} from 'react-bootstrap';
-import "./WNFTABI.js"
+import wnftDataAbi from "./WNFTABI";
+import { getNetChainIdHex } from "./WnftContract/provider";
+import { Link } from "react-router-dom";
+
+
+const CONTRACT_CHAIN = 'polygon'
 
 
 function ConnectWalletButton(props){
-    let button_text = "";
+    let button_text, classList = "";
 
-    if (!props.walletConnected)
+    if (!props.walletConnected) {
         button_text = "Connect";
-    else
+        classList = "btn-main cursor-pointer";
+    }
+    else {
         button_text = "Connected";
-    return (<a className="btn-main" onClick={props.connectEthWallet}><i className="icon_wallet_alt"></i><span>{button_text}</span></a>)
+        classList = "btn-main";
+    }
+    
+    return (<a className={classList} onClick={props.connectEthWallet}><i className="icon_wallet_alt"></i><span>{button_text}</span></a>)
 }
 
 function InvitationToken(props) {
-    if (props.hasInvitationToken)
-        return (
-              <div className="px-1"><img alt="invitation-token" className="logo" src="./images/landing/invitation-token.png" /></div>
-        )
-    else {
+    // if (props.hasInvitationToken)
+    //     return (
+    //           <div className="px-1"><img alt="invitation-token" className="logo" src="./images/landing/invitation-token.png" /></div>
+    //     )
+    // else {
         return (
             <></>
         )
-    }
+    // }
 }
 
 function Navigationbar(props) {
@@ -32,8 +42,16 @@ function Navigationbar(props) {
     const [contractLoaded, setContractLoaded] = useState(false);
     const [walletConnected, setWalletConnected] = useState(false);
 
+    useEffect(async () => {
         const { ethereum } = window;
-        if (ethereum && (props.provider == null)) {
+        let chainId = false;
+
+        try{
+            if (ethereum)
+                chainId = await ethereum.request({ method: 'eth_chainId' });
+        }catch{}
+
+        if (ethereum && chainId === getNetChainIdHex(CONTRACT_CHAIN) && (props.provider == null)) {
             const web3_provider = new ethers.providers.Web3Provider(ethereum);
             props.setProvider(web3_provider);
         }
@@ -51,11 +69,20 @@ function Navigationbar(props) {
 
                 });
             }
+    },
+    [props.provider])
+        
 
     const connectEthWallet = useCallback(async () => {
         // get the data from the api
         const { ethereum } = window;
-        if (ethereum) {
+        let chainId = false;
+        try{
+            if (ethereum)
+                chainId = await ethereum.request({ method: 'eth_chainId' });
+        }catch{}
+
+        if (ethereum && chainId === getNetChainIdHex(CONTRACT_CHAIN)) {
             const web3_provider = new ethers.providers.Web3Provider(ethereum);
             props.setProvider(web3_provider);
 
@@ -64,6 +91,9 @@ function Navigationbar(props) {
             });
 
         } else {
+            if (ethereum && chainId !== getNetChainIdHex(CONTRACT_CHAIN)){
+                alert('You must connect with Polygon network wallet')
+            }
             //window.alert("No Ethereum wallet is detected.");
             return;
           }
@@ -74,10 +104,10 @@ function Navigationbar(props) {
         let signer = props.provider.getSigner();
 
         // extract ABI
-        let NFTWabi = global.wnft.abi;
+        let NFTWabi = wnftDataAbi.abi;
 
         // create NFTW contract
-        let NFTWAddress = global.wnft.address;
+        let NFTWAddress = wnftDataAbi.address;
         let newNFTWContract = new ethers.Contract(NFTWAddress, NFTWabi, props.provider);
         props.setNFTWContract(newNFTWContract);
 
@@ -97,8 +127,8 @@ function Navigationbar(props) {
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="me-auto">
-        <Nav.Link href="#">Explore</Nav.Link>
-        <Nav.Link href="#/mint/select">Mint</Nav.Link>
+        <Nav.Link href="#/explore">Explore</Nav.Link>
+        <Nav.Link href="#/mint/select">Mint an account</Nav.Link>
         <Nav.Link href="#/about">About</Nav.Link>        
       </Nav>
     </Navbar.Collapse>

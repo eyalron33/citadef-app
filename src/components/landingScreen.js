@@ -21,7 +21,7 @@ function LandingScreen() {
                                 <div className="d-none d-lg-block"> <h1 >.eth blogging platform</h1> </div>
                                 <div className="d-lg-none"> <h3 >A .eth blogging platform</h3> </div>
                                 <div className="d-none d-lg-block">
-                                    Mint a fish to get:
+                                    Mint an account to get:
                                     <div>
                                          <ul>
                                             <li> Your own .eth blog in Citadef</li>
@@ -35,7 +35,8 @@ function LandingScreen() {
                                     <img src="./images/landing/fish-showcase1-small.png" className="img-fluid" alt=""/>
                                 </div>
                                 <div className="spacer-10"></div>
-                                <a href="/#/mint/select" className="btn-main">Mint</a>                                
+                                <a href="/#/mint/select" className="btn-main">Mint an account</a>
+                                <div>(An account costs 1$ in MATIC, and is minted on Polygon)</div>
                                 
                             </div>
                             <div className="col-lg-6 d-none d-lg-block">
